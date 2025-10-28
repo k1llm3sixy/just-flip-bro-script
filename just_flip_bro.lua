@@ -43,19 +43,21 @@ mainTab:Toggle({
 
 for _, obj in pairs(workspace:GetChildren()) do
     if obj.Name ~= "Coin" then continue end
+
     local cd = obj:FindFirstChild("ClickDetector")
     if cd and cd:IsA("ClickDetector") then
         coin = cd
         break
-    else
-        windUI:Notify({
-            Title = "Auto flip",
-            Content = "Coin click detector not found!",
-            Duration = 6.0,
-            Icon = "bell",
-        })
-        break
     end
+end
+
+if not coin then
+    windUI:Notify({
+        Title = "Auto flip",
+        Content = "Coin click detector not found!",
+        Duration = 7.0,
+        Icon = "bell",
+    })
 end
 
 function toggleAutoFlip()
