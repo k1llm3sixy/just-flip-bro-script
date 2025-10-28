@@ -8,8 +8,8 @@ IMPORTANT: Animations do not play when using the script, you must click on your 
 
 [+] Flip type choice
  
-   [-] Heads
+   [~] Heads
  
-   [-] Tails
+   [~] Tails
  
-   [-] Random
+   [~] Random
