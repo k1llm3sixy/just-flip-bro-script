@@ -1,20 +1,8 @@
 local windUI = loadstring(game:HttpGet("https://github.com/Footagesus/WindUI/releases/latest/download/main.lua"))()
 
-math.randomseed(os.time())
+local coin
 
-local rs = game:GetService("ReplicatedStorage")
-local flipRemote = rs:FindFirstChild("sendRoll")
-
-local cfg = {
-    autoFlip = false,
-    flipType = ""
-}
-
-local flipTypes = {
-    "Heads",
-    "Tails",
-    "Random"
-}
+local cfg = { autoFlip = false }
 
 local window = windUI:CreateWindow({
     Title = "Just Flip Bro | script",
@@ -53,23 +41,26 @@ mainTab:Toggle({
     end
 })
 
-mainTab:Dropdown({
-    Title = "Flip type",
-    Values = flipTypes,
-    Value = flipTypes[1],
-    Callback = function(type)
-        cfg.flipType = type
+for _, obj in pairs(workspace:GetChildren()) do
+    if obj.Name ~= "Coin" then continue end
+    local cd = obj:FindFirstChild("ClickDetector")
+    if cd and cd:IsA("ClickDetector") then
+        coin = cd
+        break
+    else
+        windUI:Notify({
+            Title = "Auto flip",
+            Content = "Coin click detector not found!",
+            Duration = 6.0,
+            Icon = "bell",
+        })
+        break
     end
-})
+end
 
 function toggleAutoFlip()
     while cfg.autoFlip do
-        if cfg.flipType == "Random" then
-            local random = math.random(1, 2)
-            flipRemote:InvokeServer(flipTypes[random])
-            else
-                flipRemote:InvokeServer(cfg.flipType)
-        end
-        task.wait(0.1)
+        fireclickdetector(coin)
+        task.wait(0.2)
     end
 end
